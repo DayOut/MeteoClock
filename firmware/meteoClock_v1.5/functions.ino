@@ -1,4 +1,6 @@
 void checkBrightness() {
+  Serial.print(F("Brightness: "));
+  Serial.println(analogRead(PHOTO));
   if (analogRead(PHOTO) < BRIGHT_THRESHOLD) {   // если темно
     analogWrite(BACKLIGHT, LCD_BRIGHT_MIN);
 #if (LED_MODE == 0)
@@ -76,7 +78,7 @@ void redrawPlot() {
 
 void readSensors() {
   bme.takeForcedMeasurement();
-  dispTemp = bme.readTemperature();
+  dispTemp = bme.readTemperature() - TEMP_INFLECITY;
   dispHum = bme.readHumidity();
   dispPres = (float)bme.readPressure() * 0.00750062;
 #if (CO2_SENSOR == 1)
